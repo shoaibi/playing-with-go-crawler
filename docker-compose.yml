@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  crawler:
+    container_name: crawler
+    hostname: crawler
+    image: shoaibi/crawler:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: debug
+    volumes:
+    - ./src:/go/src/crawler
+    ports:
+    - 5001:5000
+    - 2345:2345
+    security_opt:
+      # Required for debugger to fork process
+      - "seccomp:unconfined"
+    cap_add:
+      - "SYS_PTRACE"
+
